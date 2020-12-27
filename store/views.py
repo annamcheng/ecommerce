@@ -20,7 +20,8 @@ def cart(request):
 	else:
 		# return empty value if customer is not logged in/authenticated
 		items = []
-	context = {'items':items}
+		
+	context = {'items':items, 'order':order}
 	return render(request, 'store/cart.html', context)
 
 def checkout(request):
