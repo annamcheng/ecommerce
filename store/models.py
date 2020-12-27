@@ -24,6 +24,15 @@ class Product(models.Model):
   def __str__(self):
     return self.name
 
+# allow image to appear on site dynamically and page will still load if no image url is found
+  @property
+  def imageURL(self):
+    try:
+      url = self.image.url
+    except:
+      url = ''
+    return url
+    
 # Many to many relationship: Customer can have many orders
 # Orders belong to Customer
 class Order(models.Model):
