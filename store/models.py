@@ -36,14 +36,27 @@ class Product(models.Model):
 # Many to many relationship: Customer can have many orders
 # Orders belong to Customer
 class Order(models.Model):
-  customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
-  date_ordered = models.DateTimeField(auto_now_add=True)
-  complete = models.BooleanField(default=False, blank=False, null=True)
-  transaction_id = models.CharField(max_length=100, null=True)
+	customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+	date_ordered = models.DateTimeField(auto_now_add=True)
+	complete = models.BooleanField(default=False, null=True, blank=False)
+	transaction_id = models.CharField(max_length=100, null=True)
 
-  def __str__(self):
-    return str(self.id)
+	def __str__(self):
+		return str(self.id)
+# method on Order to get total items in Customer's cart
+# price of product * quantity
+	@property
+	def get_cart_total(self):
+		orderitems = self.orderitem_set.all()
+		total = sum([item.get_total for item in orderitems])
+		return total 
 
+	@property
+	def get_cart_items(self):
+		orderitems = self.orderitem_set.all()
+		total = sum([item.quantity for item in orderitems])
+		return total 
+  
 # Many to one relationship: cart has many items, items belong to cart
 class OrderItem(models.Model):
 	product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)
@@ -51,6 +64,11 @@ class OrderItem(models.Model):
 	quantity = models.IntegerField(default=0, null=True, blank=True)
 	date_added = models.DateTimeField(auto_now_add=True)
 
+# method on OrderItem to get total price of object * quantity in cart
+	@property
+	def get_total(self):
+		total = self.product.price * self.quantity
+		return total
 
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
