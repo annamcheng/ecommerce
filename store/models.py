@@ -43,6 +43,17 @@ class Order(models.Model):
 
 	def __str__(self):
 		return str(self.id)
+
+# allow items in cart to still be added even if they do not need shipping
+	@property
+	def shipping(self):
+		shipping = False
+		orderitems = self.orderitem_set.all()
+    # check if any items in cart have digital set to false
+		for i in orderitems:
+			if i.product.digital == False:
+				shipping = True
+		return shipping
 # method on Order to get total items in Customer's cart
 # price of product * quantity
 	@property

@@ -13,7 +13,7 @@ def store(request):
 	else:
 		# return empty value if customer is not logged in/authenticated
 		items = []
-		order = {'get_cart_total': 0, 'get_cart_items': 0}
+		order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping':False}
 		cartItems = order['get_cart_items']
 
 	# get all products
@@ -34,7 +34,7 @@ def cart(request):
 	else:
 		# return empty value if customer is not logged in/authenticated
 		items = []
-		order = {'get_cart_total': 0, 'get_cart_items': 0}
+		order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping':False}
 		cartItems = order['get_cart_items']
 		
 	context = {'items':items, 'order':order, 'cartItems':cartItems}
@@ -52,7 +52,7 @@ def checkout(request):
 	else:
 		# return empty value if customer is not logged in/authenticated
 		items = []
-		order = {'get_cart_total': 0, 'get_cart_items': 0}
+		order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping':False}
 		cartItems = order['get_cart_items']
 		
 	context = {'items':items, 'order':order, 'cartItems':cartItems}
