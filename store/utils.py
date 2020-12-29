@@ -30,7 +30,7 @@ def cookieCart(request):
           'id': product.id,
           'name': product.name,
           'price': product.price,
-          'imageURL':product.imageURL
+          'image':product.imageURL
         },
         'quantity': cart[i]['quantity'],
         'get_total':total,
