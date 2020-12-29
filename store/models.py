@@ -8,16 +8,15 @@ from django.contrib.auth.models import User
 class Customer(models.Model):
   user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
   name = models.CharField(max_length=200, null=True)
-  email = models.CharField(max_length=200, null=True)
+  email = models.EmailField(max_length=250, null=True)
 
   # String Constructor passing in self as an argument
   def __str__(self):
     return self.name
 
-
 class Product(models.Model):
   name = models.CharField(max_length=200, null=True)
-  price = models.FloatField()
+  price = models.DecimalField(max_digits=10, decimal_places=2)
   digital = models.BooleanField(default=False, null=True, blank=True)
   image = models.ImageField(blank=True, null=True)
 
