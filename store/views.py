@@ -4,7 +4,7 @@ import json
 import datetime
 
 from .models import *
-from .utils import cookieCart, cartData
+from .utils import cookieCart, cartData, guestOrder
 
 # Create views here
 def store(request):
@@ -79,6 +79,9 @@ def processOrder(request):
 	if request.user.is_authenticated:
 		customer = request.user.customer
 		order, created = Order.objects.get_or_create(customer=customer, complete=False)
+
+	else:
+
 		total = float(data['form']['total'])
 		order.transaction_id = transaction_id
 	
@@ -95,7 +98,4 @@ def processOrder(request):
 			state=data['shipping']['state'],
 			zipcode=data['shipping']['zipcode'],
 			)
-	else:
-		print('User is not logged in')
-
 	return JsonResponse('Payment submitted..', safe=False)
