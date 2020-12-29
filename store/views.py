@@ -4,6 +4,8 @@ import json
 import datetime
 
 from .models import *
+from . utils import cookieCart
+
 # Create views here
 def store(request):
 	if request.user.is_authenticated:
